@@ -1,0 +1,25 @@
+# Prefect project configuration
+name: archer-fusions-to-cbio-sv
+prefect-version: ">=3.0.0"
+
+pull:
+  - prefect.deployments.steps.git_clone:
+      repository: "{{ clone_url | default('https://github.com/your-org/your-repo.git') }}"
+      branch: "{{ branch | default('main') }}"
+      # If running from a local checkout on a worker, you can replace this step with a no-op
+      # or point to a specific Git URL. For local experiments, this step is ignored.
+
+  - prefect.deployments.steps.pip_install:
+      requirements: requirements.txt
+
+deployments:
+  - name: archer-fusions-to-cbio-sv
+    entrypoint: workflows/archer_to_cbio_flow.py:archer_to_cbio_flow
+    parameters:
+      output_dir: "./out"
+      # Provide script args that match your converter's CLI, for example:
+      # script_args: ["--input", "tests/data/*.txt", "--output", "out/data_sv.txt"]
+    work_pool:
+      name: default-process
+      work_queue_name: null
+      job_variables: {}

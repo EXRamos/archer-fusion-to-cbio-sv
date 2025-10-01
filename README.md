@@ -65,9 +65,3 @@ archer_prefect_project/
 
 - `output_dir` – folder to create before running the converter.
 - `script_args` – free-form list of CLI args passed to the original converter (keeps you flexible as the script evolves).
-
-## Notes
-
-- If you prefer a pure-Python API (no subprocess), we can refactor the original
-  script to expose a `convert(input_glob: str, output_path: str, ...)` function and call it directly in a task.
-# archer-fusion-to-cbio-sv
